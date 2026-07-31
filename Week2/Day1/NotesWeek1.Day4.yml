@@ -1,0 +1,117 @@
+📑 Agenda for Week2 Day01 : Operators, Control Statements, Strings in JS and Arrays in JS
+
+📆 Date: 19 February [Thursday]
+ 
+🕝 Session Highlights
+
+ Recap 
+- Key takeaways from the previous session:  
+Introduction to JavaScript, Mastering Variables and its behaviours.
+
+1. Opertors and Control Statements :
+- Various JavaScript Operators 
+- Control Statments like if-else, switch, for loop, while loop
+
+2. String :
+- Exploring Methods and Real-world Use Cases
+- [Practice] Solve String-based Problems
+
+3. Understanding Arrays in JavaScript  
+* Basics of Arrays: What and Why?  
+* Common Methods and Operations on Arrays. 
+
+
+🕡 Wrap Up / Q&A 
+
+📝 Keep your physical notebook and pen handy to sketch out ideas!
+
+
+Notes :
+------
+
+
+looping :
+--------
+
+while → “Check first, then act”
+do-while → “Act first, then check”
+
+Login Retry Example (Framework Level) - do while loop :
+-----------------------------------------
+let loginSuccess;
+let attempt = 0;
+
+do {
+    loginSuccess = await performLogin(username, password);
+    attempt++;
+
+} while (!loginSuccess && attempt < 3);
+
+if (!loginSuccess) {
+    console.log("Account locked or invalid credentials");
+}
+
+
+null == undefined → Why TRUE?
+console.log(null == undefined);  // true
+
+-------------------------------------------------------------
+
+Strict Equality (===) in undefined and null:
+-----------------------------------------------
+
+1️⃣ console.log(null === undefined) // false
+🔎 Internally (Abstract Equality Comparison Algorithm)
+
+When JS sees:
+
+null == undefined
+
+
+It follows a special rule defined in ECMAScript spec:
+
+If one value is null and the other is undefined, return true.
+
+🚨 No type conversion happens here.
+
+It is a direct hard-coded rule in the spec.
+
+So internally:
+
+Step 1: Types are different
+Step 2: Check special rule
+If x is null AND y is undefined → return true
+
+---------------------------------------------------------------------------------
+
+1️⃣ console.log(undefined === undefined) // true
+
+Why is this true?
+
+Both sides are undefined
+
+Same type → undefined
+
+Same value → undefined
+
+So result is true.
+
+2️⃣ Loose Equality (==)
+== checks:
+
+✅ Value
+
+⚠️ Allows type conversion (coercion)
+
+console.log(undefined == undefined) // true
+Why is this also true?
+
+Because:
+
+Both sides are already undefined
+
+No type conversion needed
+
+They are identical
+
+So result is again true.
