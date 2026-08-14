@@ -69,3 +69,8 @@ object
 
 
 */
+
+//Dynamic Typing
+
+let x =123 // x is a variable which is storing a number value 123
+x="123" // x is now storing a string value "123"
