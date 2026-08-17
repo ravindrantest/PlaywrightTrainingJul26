@@ -1,0 +1,12 @@
+[
+{
+"TestCaseNo":"TC001",
+"Username":"ravindran.ramdas@testleaf.com",
+"Password":"Ravi@testleaf#123"
+},
+{
+"TestCaseNo":"TC002",
+"Username":"ravindran@qeagle.com",
+"Password":"Qeagle#123"
+}
+]
