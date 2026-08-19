@@ -1,0 +1,84 @@
+📑 Agenda for Week 6 Day 2: Advanced Data Parameterization usinf dotenv
+🎯 [Focus: Advanced Data Parameterization ]  
+
+📆 Date: 19 Aug. [Wednesday]  
+
+🕝 Session Highlights
+
+1. *Reading ENV Files*  
+* Importing and parsing ENV test data.   
+* Best practices for maintaining test data files. 
+
+
+
+🕡 Wrap Up / Q&A  
+
+📝 Keep your physical notebook and pen handy to sketch out ideas!
+
+------------------------------------------------------------------------------------------------------
+
+# Data Parameterization with ENV
+---
+### **Definition**
+
+A .env file (short for environment file) is a simple text file used to store environment variables in the form of key-value pairs.
+
+It is commonly used in projects to separate configuration data (like URLs, API keys, database credentials, secrets) from the actual application code.
+
+Usage
+1. Sample ENV (config.env):
+
+APP_URL=https://example.com
+USERNAME=demoUser
+PASSWORD=securePass123
+
+
+Step 1:
+Install dotenv : command - npm install dotenv.
+Step 2:
+Create a .env file under Data folder.
+Step 3:
+Create a .spec.ts and import data from env file similar to the sample script. 
+Step 4:
+Use the imported data in your test cases for validation.
+Step 5:
+Run the test to see data-driven testing in action.
+
+If you need to set environment in the config file follow below steps:
+
+1. Open 2 config files fpr qa and prod seperately
+2. Paste the import script in the playwright.qa.config.ts 
+
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: 'Data/qa.env' });
+
+3. Also Paste the import script in the playwright.prod.config.ts 
+
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: 'Data/prod.env' });
+
+4. Now execute the 03-learntoReadENV.spec.ts with the below command in the terminal
+
+--> For qa environment
+npx playwright test 03-learntoReadENV.spec.ts --config=playwright.qa.config.ts 
+
+--> For prod environment
+npx playwright test 03-learntoReadENV.spec.ts --config=playwright.prod.config.ts 
+
+Note you can also set this commands in package.json like below
+
+"scripts": {
+    "test:qa": "npx playwright test 03-learntoReadENV.spec.ts --config=playwright.qa.config.ts",
+    "test:prod": "npx playwright test 03-learntoReadENV.spec.ts --config=playwright.prod.config.ts"
+
+  }
+
+  and excute the same with terminal commands like 
+
+  npm run "test:qa"
+  npm run "test:prod"
+
+
+
