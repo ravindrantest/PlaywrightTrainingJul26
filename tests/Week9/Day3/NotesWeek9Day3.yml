@@ -1,0 +1,184 @@
+
+📑 Agenda for Week 9 Day 3: Test Annotations.
+
+
+
+🕝 Session Highlights
+
+
+1. Test Annotations
+* Enhancing test readability and control using annotations.
+* Examples: Skipping, focusing, or tagging specific tests.
+
+
+# Test Annotation Precondition and PostCondition :
+---
+
+--> Control the behaviour of the execution.
+
+hooks -> The execution flow before and after the actual test execution.
+------
+test.beforeAll --> before all test it will be executed
+test.beforeEach --> before each test it will be executed
+test.afterEach -->  after each test it will be executed
+test.afterAll --> after all test it will be executed
+
+------------------------------------------------------
+Test Annotation
+---
+
+test.only --> focus on a specific test.
+test.skip --> ignore the test from execution
+test.fixme --> track and know failures that are yet tp be fixed
+test.fail --> for negative testing --> test has to fail is the expectation
+test.slow --> triple the timeout of the tests execution --> 30 s --> 60 s for the entire test execution
+test.describe --> grouping the test depending on the status of the other test.
+test.use -->use the functionalities
+
+
+**************************************************************************************
+
+```ts
+import { test, expect } from "@playwright/test";
+
+/**
+ * =========================
+ * test.skip()
+ * =========================
+ * Purpose:
+ * - Do NOT execute the test at all
+ * - Used when environment / feature is NOT ready
+ */
+test.skip('Skip when environment is not ready', async ({ page }) => {
+  await page.goto('http://leaftaps.com/opentaps/control/main');
+
+  await page.locator('#username').fill('democsr');
+  await page.locator('#password').fill('crmsfa');
+  await page.locator('.decorativeSubmit').click();
+  await page.locator('text=CRM/SFA').click();
+});
+
+
+/**
+ * =========================
+ * test.fixme()
+ * =========================
+ * Purpose:
+ * - Test is known to be broken or flaky
+ * - Acts as a reminder to FIX later
+ * - Test will be skipped, but marked as "needs fixing"
+ */
+test.fixme('Test is under repair / flaky', async ({ page }) => {
+  await page.goto('http://leaftaps.com/opentaps/control/main');
+
+  await page.locator('#username').fill('democsr');
+  await page.locator('#password').fill('crmsfa');
+  await page.locator('.decorativeSubmit').click();
+  await page.locator('text=CRM/SFA').click();
+});
+
+
+/**
+ * =========================
+ * test.fail()
+ * =========================
+ * Purpose:
+ * - Test WILL run
+ * - Failure is EXPECTED due to a known bug
+ * - Failure will NOT break CI
+ */
+test.fail('Known bug: CRM link not visible', async ({ page }) => {
+  await page.goto('http://leaftaps.com/opentaps/control/main');
+
+  await page.locator('#username').fill('democsr');
+  await page.locator('#password').fill('crmsfa');
+  await page.locator('.decorativeSubmit').click();
+
+  // Known issue: locator fails
+  await expect(page.locator('text=CRM/SFA')).toBeVisible();
+});
+
+
+/**
+ * =========================
+ * test.slow()
+ * =========================
+ * Purpose:
+ * - Mark test as slow
+ * - Doubles the default timeout
+ */
+test('Slow test example (timeout increased)', async ({ page }) => {
+
+  test.slow(); // increases timeout (approx 2x default)
+
+  await page.goto('http://leaftaps.com/opentaps/control/main');
+
+  await page.locator('#username').fill('democsr');
+  await page.locator('#password').fill('crmsfa');
+
+  await page.locator('.decorativeSubmit').click();
+
+  await page.locator('text=CRM/SFA').click();
+});
+```
+
+---
+
+##  Simple Explanation 
+
+###  `test.skip()`
+
+>  Don’t run this test at all
+
+* Used when:
+
+  * Environment is down
+  * Feature not implemented
+* Result in report: **Skipped**
+
+---
+
+###  `test.fixme()`
+
+>  This test is broken – fix it later
+
+* Same as skip
+* But tells the **team**:
+
+  > “This test needs fixing”
+* Very useful for flaky tests
+
+---
+
+###  `test.fail()`
+
+>  Run the test, but failure is expected
+
+* Test **executes**
+* If it fails → ✔ expected
+* If it passes → ⚠ unexpected (bug may be fixed!)
+
+---
+
+###  `test.slow()`
+
+>  This test needs more time
+
+* Increases timeout
+* Useful for:
+
+  * Slow APIs
+  * Heavy pages
+  * Large uploads/downloads
+
+---
+
+##  Quick Memory Table
+
+| Annotation   | Runs? | Purpose                         |
+| ------------ | ----- | ------------------------------- |
+| `test.skip`  | ❌ No  | Environment / feature not ready |
+| `test.fixme` | ❌ No  | Broken / flaky test             |
+| `test.fail`  | ✅ Yes | Known bug                       |
+| `test.slow`  | ✅ Yes | Needs more time                 |
+
